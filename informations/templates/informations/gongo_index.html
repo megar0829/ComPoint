@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+
+{% block style %}
+header {
+  font-family: 'NanumSquareExtraBold';
+  margin-top: 1rem; 
+  margin-bottom: 3rem; 
+  background-color: #FCFAF3;
+  color: #1B525C;
+  height: 250px;
+  padding: 0;
+  border: 1px #FCFAF3 solid;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+.header-div {
+  height: inherit;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  {% comment %} background-image: url('../../../static/img/dotted_pattern.avif'); {% endcomment %}
+}
+.header-img-div {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img-div1 {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img {
+  height: inherit;
+  width: 100%;
+}
+.header-img1 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+p {
+  margin: 0;
+}
+.card {
+  height: 200px;
+}
+.logo {
+  height: 50px;
+}
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+    {% comment %} {% if request.user.is_authenticated and request.user.is_staff %} {% endcomment %}
+    <div>
+      <form action="{% url "info:gongos" %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+    {% comment %} {% endif %} {% endcomment %}
+
+    <!-- header -->
+    <header class="position-relative d-flex flex-row justify-content-end shadow-sm">
+    <div class="header-img-div">
+      <img class='header-img1' src="../../../static/img/tryme_circle.png" alt="">
+    </div>
+    <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <span class="display-6">
+          공고
+        </span>
+        <span class="fs-2">
+          찾기
+        </span>
+        <span class="fs-1">
+          힘드시죠?
+        </span>
+      </div>
+      <div>
+        <span class="fs-2">
+          옛다-
+        </span>
+        <span class="display-4">
+          채용 정보
+        </span>
+      </div>
+    </div>
+    <div class="header-img-div">
+      <img class='header-img1' src="../../../static/img/thinking_circle.png" alt="">
+    </div>
+  </header>
+
+    <p class="fs-4">현재 {{ gongos|length }}개의 채용 진행 중</p>
+
+    <!-- 공고 목록 -->
+    <div class="row">
+      {% for gongo in gongos %}
+        <div class="col-6 col-lg-3 mb-2 g-2">
+          <div class="card shadow-sm">
+            <a href="{% url "info:gongo_detail" gongo.pk %}" class="link-dark text-decoration-none">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <img class="logo" src="{{ gongo.image }}" alt="logo">
+                  <form class="likes-forms" data-gongo-id="{{ gongo.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in gongo.bookmark_users.all %}
+                      <button type="submit" class="btn border-0" id="like-{{ gongo.pk }}">
+                        <i class="bi bi-bookmark-fill fs-5"></i>
+                      </button>
+                    {% else %}
+                    <button type="submit" class="btn border-0" id="like-{{ gongo.pk }}">
+                      <i class="bi bi-bookmark fs-5"></i>
+                    </button>
+                    {% endif %}
+                  </form>
+                </div>
+                <div class="mt-2">
+                  <span class="fw-bold">{{ gongo.name }}</span>
+                </div>
+                <div class="mt-1">
+                  <span>{{ gongo.title }}</span>
+                </div>
+                <div>
+                  <span>D-{{ gongo.dday }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  document.getElementById('gonggo').classList.add('active')
+  const formTags = document.querySelectorAll('.likes-forms')
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  formTags.forEach((formTag) => {
+    formTag.addEventListener('click', function (event) {
+      event.preventDefault()
+      
+      const gongoId = formTag.dataset.gongoId
+
+      axios({
+        url: `/info/${gongoId}/bookmark/`,
+        method: 'post',
+        headers: {'X-CSRFToken': csrftoken},
+      })
+        .then((response) => {
+          const is_liked = response.data.is_liked
+          const iTag = document.querySelector(`#like-${gongoId} > i`)
+          if (is_liked === true) {
+            iTag.classList.remove('bi-bookmark')
+            iTag.classList.add('bi-bookmark-fill')
+          } else {
+            iTag.classList.remove('bi-bookmark-fill')
+            iTag.classList.add('bi-bookmark')
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    })
+  })
+</script>
+{% endblock content %}

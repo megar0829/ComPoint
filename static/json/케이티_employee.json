@@ -1,0 +1,46 @@
+{
+    "status": "000",
+    "message": "정상",
+    "list": [
+        {
+            "rcept_no": "20230323001449",
+            "corp_cls": "Y",
+            "corp_code": "00190321",
+            "corp_name": "케이티",
+            "sexdstn": "남",
+            "fo_bbm": "전기통신업",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "15,934",
+            "rgllbr_abacpt_labrr_co": "-",
+            "cnttk_co": "643",
+            "cnttk_abacpt_labrr_co": "-",
+            "sm": "16,577",
+            "avrg_cnwk_sdytrn": "           22.6 ",
+            "fyer_salary_totamt": "1,679,702,000,000",
+            "jan_salary_am": "105,000,000",
+            "rm": "-"
+        },
+        {
+            "rcept_no": "20230323001449",
+            "corp_cls": "Y",
+            "corp_code": "00190321",
+            "corp_name": "케이티",
+            "sexdstn": "여",
+            "fo_bbm": "전기통신업",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "3,889",
+            "rgllbr_abacpt_labrr_co": "-",
+            "cnttk_co": "78",
+            "cnttk_abacpt_labrr_co": "-",
+            "sm": "3,967",
+            "avrg_cnwk_sdytrn": "           19.1 ",
+            "fyer_salary_totamt": "339,959,000,000",
+            "jan_salary_am": "94,000,000",
+            "rm": "-"
+        }
+    ]
+}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block style %}
+.m_div { 
+  margin-top : 30px;
+}
+.gongo_img { 
+  height: 40px;
+}
+.container { 
+  height: 1000px;
+}
+.com-div, .gong-div { 
+  height : 700px;
+}
+a{
+  text-decoration: none;
+}
+a:hover { 
+  text-decoration :underline;
+}
+.btn-div {
+  background-color: #FFE76C;
+  color: #1C535C;
+}
+.active {
+  
+}
+{% endblock style %}
+
+
+{% block content %}
+<div class="container m_div">
+  <div class="m_div">
+    <div class="row gx-5 m_div"> 
+      <div class="col-3">
+        <div class="m_div">
+          <span class="fs-3">내 계정</span>
+        </div> 
+        <div class="list-group text-center m_div" id="list-tab"> 
+          <a class="list-group-item active list-group-item-action " data-bs-toggle="list" href="#user_info"> 
+            <span class="fs-6">회원 정보</span>
+          </a> 
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#community_info"> 
+            <span class="fs-6">커뮤니티 활동</span>
+          </a> 
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#bookmark_info"> 
+            <span class="fs-6">관심 공고</span>
+          </a> 
+        </div> 
+      </div> 
+      <div class="col-7 m_div"> 
+        <div class="tab-content"> 
+          <div class="tab-pane rounded active" id="user_info"> 
+              <div class="">
+                <span class="fs-3">회원 정보</span> 
+              </div>
+              <div class="border rounded p-3 shadow-sm d-flex flex-row">
+                <div class="flex-grow-1">
+                  <div class="m_div">
+                    <span class="fs-4">닉네임 : {{ user.nickname }}</span>
+                  </div>
+                  <div class="m_div">
+                    <span class="fs-4">아이디 : {{ user.username }}</span>
+                  </div>
+                  <div class="m_div mb-3">
+                    <span class="fs-4">E-Mail : {{ user.email }}</span>
+                  </div>
+                </div>
+                <div class="m_div flex-grow-1 d-flex flex-column justify-content-between align-items-end">
+                  <div class="">
+                    <a class="btn btn-outline-danger text-decoration-none" href="{% url "accounts:delete" %}">회원 탈퇴</a>
+                  </div>
+                  <div class="mb-3">
+                    <a class="btn btn-outline-secondary text-decoration-none" href="{% url "accounts:update"%}">회원 정보 수정</a>
+                  </div>
+                </div>
+              </div> 
+          </div>
+          <div class="tab-pane rounded" id="community_info"> 
+            <div class="">
+              <span class="fs-3">커뮤니티 활동</span> 
+            </div>
+            <div class="overflow-auto com-div">
+              <div>
+                <div class="border p-3 m-3 shadow-sm rounded me-4">
+                {% if posts %}
+                  {% for post in posts %}
+                      <div class="d-flex justify-content-between m-2">
+                        <div class="m-0">
+                          <span> <a href="{% url "posts:detail" post.pk%}" class="text-dark">{{ post.title }}</a></span>
+                        </div>
+                        <div class=m-0>
+                          <i class="bi bi-heart"></i>
+                          {{ post.like_users.all | length}}
+                        </div>
+                      </div>
+                      <div class="p-2">
+                        {% if post.created_string %}
+                        <span>{{ post.created_string }}</span>
+                        {% else %}
+                        <span>{{ post.created_at | date:'m월 d일' }}</span>
+                        {% endif %}
+                      </div>
+                      {% endfor %}
+                      {% else %}
+                      <div>
+                        <span class="fs-4">다양한 사람들과 게시판에서 소통해보세요!</span>
+                      </div>
+                      {% endif %}
+                </div>
+              </div> 
+            </div>
+          </div> 
+          <div class="tab-pane rounded" id="bookmark_info"> 
+            <div class="">
+              <span class="fs-3">관심 공고</span> 
+            </div>
+            <div class="overflow-auto gong-div m_div">
+              <div>
+                {% if gongos %}
+                  {% for gongo in gongos %}
+                    <div class="border p-3 m_div shadow-sm rounded me-4">
+                      <div class="m-0"><img src="{{ gongo.image }}" alt="" class="gongo_img m-0"> </div>
+                      <div class="m-2"><span> <a href="{% url "info:gongo_detail" gongo.pk %}" class="text-dark">{{ gongo.title }}</a></span></div>
+                      {{ gongo.date }}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                <div class="border p-3 m_div shadow rounded">
+                  <span class="fs-4">관심이 가는 공고를 추가해보세요!</span>
+                  <br>
+                  <br>
+                  <a href="{% url "info:gongos" %}">채용 공고보러 가기</a>
+                </div>
+                {% endif %}
+              </div> 
+            </div>
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+  </div>
+</div>
+
+  
+  
+<script>
+  
+    document.getElementById('login').classList.add('active');
+
+    function msg() { 
+      alret("Hello world!")
+    }
+  </script>
+{% endblock content %}

@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block style %}
+header {
+  font-family: 'NanumSquareExtraBold';
+  margin-top: 1rem; 
+  margin-bottom: 3rem; 
+  background-color: #FCFAF3;
+  color: #1B525C;
+  height: 250px;
+  padding: 0;
+  border: 1px #FCFAF3 solid;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+.header-div {
+  height: inherit;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  {% comment %} background-image: url('../../../static/img/dotted_pattern.avif'); {% endcomment %}
+}
+.header-img-div {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img-div1 {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img {
+  height: inherit;
+  width: 100%;
+}
+.header-img1 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.cont-div {
+  {% comment %} background-color: lightblue; {% endcomment %}
+}
+.cat-div {
+  {% comment %} box-sizing: content-box; {% endcomment %}
+}
+.cat-div-cat {
+  border: 1px #FED76D solid;
+  border-radius: 0.5rem;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FED76D;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: content-box;
+  font-family: 'NanumSquareBold';
+}
+.cat-div-div {
+  height: 90%;
+}
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+  <!-- header -->
+  <header class="position-relative d-flex flex-row justify-content-end shadow-sm">
+    <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <span class="display-6">
+          다양한 사람들과
+        </span>
+        <span class="display-5">
+          소통하는
+        </span>
+      </div>
+      <div>
+        <span class="display-2">
+          커뮤니티
+        </span>
+        <span class="display-6">
+          공간입니다
+        </span>
+      </div>
+    </div>
+    <div class="header-img-div me-4">
+      <img class='header-img1' src="../../../static/img/three.png" alt="">
+    </div>
+  </header>
+  <div class="d-flex flex-row justify-content-end mb-4">
+    <div>
+      <a class="btn btn-outline-secondary" href="{% url 'posts:create' %}">글 작성</a>
+    </div>
+  </div>
+
+  <div class = "cont-div row row-cols-1 row-cols-md-2 g-4">
+    <div class="cat-div col">
+      <div class="cat-div-cat mb-3 shadow-sm">
+        <a class="text-decoration-none link-dark" href="{% url "posts:category_index" category1.pk %}">
+          <span class="fs-4">{{ category1.name }}</span>
+        </a>
+      </div>
+      <div class="cat-div-div mx-2 mt-1">
+        {% for post1 in posts1 %}
+        <div class="border-bottom border-secondary mb-3 pb-1">
+          <div class="d-flex flex-row justify-content-between mb-1">
+            <div>
+              <span class="fs-5">{{ post1.user.nickname }} </span>
+            </div>
+            <div>
+              {% if post1.created_string %}
+              <span>{{ post1.created_string }}</span>
+              {% else %}
+              <span>{{ post1.created_at | date:'m월 d일' }}</span>
+              {% endif %}
+              <span>
+                <i class="bi bi-heart"></i>
+                {{ post1.like_users.all | length}}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <a class="text-decoration-none link-dark" href="{% url "posts:detail" post1.pk %}">
+                <span class="fs-5">{{ post1.title }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="cat-div col">
+      <div class="cat-div-cat mb-3 shadow-sm">
+        <a class="text-decoration-none link-dark" href="{% url "posts:category_index" category2.pk %}">
+          <span class="fs-4">{{ category2.name }}</span>
+        </a>      
+      </div>
+      <div class="cat-div-div mx-2 mt-1">
+        {% for post2 in posts2 %}
+        <div class="border-bottom border-secondary mb-3 pb-1">
+          <div class="d-flex flex-row justify-content-between mb-1">
+            <div>
+              <span class="fs-5">{{ post2.user.nickname }} </span>
+            </div>
+            <div>
+              {% if post2.created_string %}
+              <span>{{ post2.created_string }}</span>
+              {% else %}
+              <span>{{ post2.created_at | date:'m월 d일' }}</span>
+              {% endif %}
+              <span>
+                <i class="bi bi-heart"></i>
+                {{ post2.like_users.all | length}}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <a class="text-decoration-none link-dark" href="{% url "posts:detail" post2.pk %}">
+                <span class="fs-5">{{ post2.title }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="cat-div col mt-5">
+      <div class="cat-div-cat mb-3 shadow-sm">
+        <a class="text-decoration-none link-dark" href="{% url "posts:category_index" category3.pk %}">
+          <span class="fs-4">{{ category3.name }}</span>
+        </a>      
+      </div>
+      <div class="cat-div-div mx-2 mt-1">
+        {% for post3 in posts3 %}
+        <div class="border-bottom border-secondary mb-3 pb-1">
+          <div class="d-flex flex-row justify-content-between mb-1">
+            <div>
+              <span class="fs-5">{{ post3.user.nickname }} </span>
+            </div>
+            <div>
+              {% if post3.created_string %}
+              <span>{{ post3.created_string }}</span>
+              {% else %}
+              <span>{{ post3.created_at | date:'m월 d일' }}</span>
+              {% endif %}
+              <span>
+                <i class="bi bi-heart"></i>
+                {{ post3.like_users.all | length}}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <a class="text-decoration-none link-dark" href="{% url "posts:detail" post3.pk %}">
+                <span class="fs-5">{{ post3.title }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="cat-div col mt-5">
+      <div class="cat-div-cat mb-3 shadow-sm">
+        <a class="text-decoration-none link-dark" href="{% url "posts:category_index" category4.pk %}">
+          <span class="fs-4">{{ category4.name }}</span>
+        </a>      
+      </div>
+      <div class="cat-div-div mx-2 mt-1">
+        {% for post4 in posts4 %}
+        <div class="border-bottom border-secondary mb-3 pb-1">
+          <div class="d-flex flex-row justify-content-between mb-1">
+            <div>
+              <span class="fs-5">{{ post4.user.nickname }} </span>
+            </div>
+            <div>
+              {% if post4.created_string %}
+              <span>{{ post4.created_string }}</span>
+              {% else %}
+              <span>{{ post4.created_at | date:'m월 d일' }}</span>
+              {% endif %}
+              <span>
+                <i class="bi bi-heart"></i>
+                {{ post4.like_users.all | length}}
+              </span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <a class="text-decoration-none link-dark" href="{% url "posts:detail" post4.pk %}">
+                <span class="fs-5">{{ post4.title }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>   
+  </div>  
+</div>
+  
+
+  <script>
+  document.getElementById('post').classList.add('active');
+</script>
+{% endblock content %}

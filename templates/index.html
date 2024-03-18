@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+
+<!-- 남은 날짜 D-day로 설정하기 -->
+<!-- 뉴스 제목 길이 통일시키기 -->
+<!-- footer 만들기 -->
+
+<div class="container">
+  <header>
+    <img src="static/img/임시헤더.png/" alt="header" class="w-100">
+  </header>
+
+  <div class ="row row-cols-2 g-5">
+    <div class="col">
+      <!-- 최근 소식 -->
+      <div>
+        <h3>최근 소식</h3>
+        <p>기업 정보에 더 많은 소식들이 있어요</p>
+        <div class="card shadow-sm">
+          <ul class="list-group list-group-flush">
+            {% for article in articles %}
+              <li class="list-group-item d-flex justify-content-between">
+                <a href="{{ article.url }}" class="link-dark text-decoration-none">{{ article.title }}</a>
+                <p class="text-muted">{{ article.date|date:"Y-m-d" }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- 기업 리스트 -->
+      <div class="mt-5">
+        <h3>기업 리스트</h3>
+        <p>한 번의 클릭으로 기업 조사가 가능해요</p>
+        <div class="row row-cols-1 row-cols-lg-2">
+          {% for company in companies %}
+            <div class="col mb-3">
+              <div class="card shadow-sm text-center">
+                <a href="{% url "info:detail" company.pk %}" class="link-dark text-decoration-none">
+                  <div class="card-body">
+                    <img src="{{ company.logo_path }}" alt="기업 로고" height="33.5px">
+                    {% comment %} <p>{{ company.name }}</p> {% endcomment %}
+                  </div>
+                </a>
+              </div>
+            </div>  
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col" style="height: 100%;">
+      
+      <!-- 채용 공고 -->
+      <div>
+        <h3>채용 공고</h3>
+        <div class="d-flex justify-content-between">
+          <p>곧 채용이 마감되는 공고들이에요</p>
+          <a href="{% url "info:gongos" %}" class="link-dark text-decoration-none"><p>더보기</p></a>
+        </div>
+        <div class="row row-cols-1 row-cols-lg-2 mb-3">
+          {% for gongo in gongos %}
+            <div class="col mb-3">
+              <div class="card shadow-sm h-100">
+                <a href="{% url "info:gongo_detail" gongo.pk %}" class="link-dark text-decoration-none">
+                  <div class="card-body">
+                    <img src="{{ gongo.image }}" alt="" style="width: 100px;">
+                    <p>{{ gongo.title }}</p>
+                    <p>{{ gongo.name }}</p>
+                    <p>D-{{ gongo.dday }}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock content %}

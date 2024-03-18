@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block style %}
+.header {
+  font-family: 'NanumSquareExtraBold';
+  margin-top: 1rem; 
+  margin-bottom: 2rem; 
+  background-color: #FCFAF3;
+  color: #1B525C;
+  height: 200px;
+  padding: 0;
+  border: 1px #FCFAF3 solid;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+iframe {
+  width: 100%;
+  height: 1000px;
+}
+.apply {
+  width: 200px;
+  margin-bottom: 2rem;
+  background: #FFE76C;
+}
+{% endblock style %}
+
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center">
+  <!-- header -->
+  <div class="header col-12 rounded p-4 justify-content-around shadow-sm">
+    <div class="d-flex p-3 row gx-3">
+      <span class="fs-5">{{ gongo.name }}</span>
+      <h2>{{ gongo.title }}</h2> 
+      <span>~{{ gongo.date }}</span>
+    </div>
+    <div>
+      <form id="likes-forms" data-gongo-id="{{ gongo.pk }}">
+        {% csrf_token %}
+        {% if request.user in gongo.bookmark_users.all %}
+        <button type="submit" class="btn border-0">
+          <i class="bi bi-bookmark-fill fs-3"></i>
+        </button>
+        {% else %}
+        <button type="submit" class="btn border-0">
+          <i class="bi bi-bookmark fs-3"></i>
+        </button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <a href="https://www.jobkorea.co.kr/{{ gongo.url }}" class="btn btn-light apply btn-lg">지원하기</a>
+  </div>
+  
+  <div class="iframe-div">
+    <iframe src="https://m.jobkorea.co.kr/Recruit/GIReadDetailContentIframe/{{ gongo.no }}" frameborder="0" scrolling="yes"></iframe>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  document.getElementById('gonggo').classList.add('active')
+  const formTag = document.querySelector('#likes-forms')
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  formTag.addEventListener('submit', function (event) {
+    event.preventDefault()
+      
+    const gongoId = formTag.dataset.gongoId
+
+    axios({
+      url: `/info/${gongoId}/bookmark/`,
+      method: 'post',
+      headers: {'X-CSRFToken': csrftoken},
+    })
+      .then((response) => {
+        const is_liked = response.data.is_liked
+        const iTag = document.querySelector('#likes-forms > button > i')
+        if (is_liked === true) {
+          iTag.classList.remove('bi-bookmark')
+          iTag.classList.add('bi-bookmark-fill')
+        } else {
+          iTag.classList.remove('bi-bookmark-fill')
+          iTag.classList.add('bi-bookmark')
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  })
+</script>
+{% endblock content %}

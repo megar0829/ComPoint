@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% comment %} {% block head %}
+  <link rel="stylesheet" href="/informations/static/index.css">
+{% endblock head %} {% endcomment %}
+
+{% block style %}
+header {
+  font-family: 'NanumSquareExtraBold';
+  margin-top: 1rem; 
+  margin-bottom: 3rem; 
+  background-color: #FCFAF3;
+  color: #1B525C;
+  height: 250px;
+  padding: 0;
+  border: 1px #FCFAF3 solid;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+.header-div {
+  height: inherit;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  {% comment %} background-image: url('../../../static/img/dotted_pattern.avif'); {% endcomment %}
+}
+.header-img-div {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img-div1 {
+  position: relative;
+  height: inherit;
+  z-index: 1;
+  width: 33.3%;
+}
+.header-img {
+  height: inherit;
+  width: 100%;
+}
+.header-img1 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.list {
+background: #8FBC8F;
+padding: 0;
+}
+p {
+margin: 0;
+}
+.card-grid-tag {
+  height: 250px;
+/* width:  */
+}
+.card-div {
+  height: 100%;
+  border-radius: 1em;
+
+}
+.card-body-tag {
+  height: 50%;
+  padding: 0.5rem;
+}
+.card-body-grid {
+  height: 100%;
+}
+.card-img-tag {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-text-div {
+  display: flex;
+
+}
+.comp-name {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.comp-info {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.card-img-img {
+  height: 100px;
+}
+.info-btn {
+  background : #FED76D;
+}
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+  
+  {% comment %} {% if request.user.is_authenticated and request.user.is_staff %} {% endcomment %}
+  <div>
+    <form action="{% url "info:index" %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+  {% comment %} {% endif %} {% endcomment %}
+
+  <!-- header -->
+  <header class="position-relative d-flex flex-row justify-content-end shadow-sm">
+    <div class="header-img-div">
+      <img class='header-img1' src="../../../static/img/square_mulgunamu.png" alt="">
+    </div>
+    <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      <div class="mb-1">
+        <span class="display-5">
+          기업
+        </span>
+        <span class="display-6">
+          조사는?
+        </span>
+      </div>
+      <div>
+        <span class="display-2">
+          컴포인트
+        </span>
+      </div>
+    </div>
+    <div class="header-img-div">
+      <img class='header-img1' src="../../../static/img/painting_triangle.png" alt="">
+    </div>
+  </header>
+
+  <!-- 기업 목록 -->
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for company in companies %}
+    <div class="col card-grid-tag ">
+      <div class="card card-div mb-3 shadow-sm">
+        <div class="card-img-tag">
+          <a href="{% url "info:detail" company.pk %}" class="link-dark text-decoration-none">
+            <img src="{{ company.logo_path }}" alt="기업 로고" class="card-img-top p-2 card-img-img">
+          </a>
+        </div>
+        <div class="card-body-tag">
+          <div class="row card-body-grid">
+            <div class="col-3 offset-1 comp-name">
+              <span class="fs-3 text-nowrap">{{ company.name }}</span>
+            </div>
+            <div class="col-6 offset-2 comp-info">
+              <div>
+                <span class="fs-5">현재 {{ company.gongo_set.all|length }} 개의 채용 진행 중</span>
+              </div>
+              <div>
+                <a class="btn info-btn" href="{% url "info:detail" company.pk %}">정보 보러가기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.getElementById('information').classList.add('active');
+</script>
+{% endblock content %}

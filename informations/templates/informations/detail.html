@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+{% block style %}
+.header {
+    margin-top: 3rem; 
+    margin-bottom: 3rem; 
+    background: rgb(156, 159, 218);
+    height: 20%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+.box {
+    {% comment %} background: #f2f2f2; {% endcomment %}
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+.remote {
+    position: fixed;
+    top: 100px;
+}
+a{
+    text-decoration : none;
+    color : black;
+}
+.news-div, .report-div { 
+    height: 500px;
+}
+
+
+{% endblock style %}
+
+
+{% block content %}
+<div class="remote">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link text-black" href="#재무제표">재무제표</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-black" href="#개요">개요</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-black" href="#리포트/기사">리포트/기사</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-black" href="#채용공고">채용공고</a>
+        </li>
+      </ul>
+</div>
+
+<div class="container">
+    <!-- header -->
+    <div class="header col-12 rounded p-4 container">
+        <div class="d-flex p-3 row gx-3">
+            <div class="col">
+                {% if company.logo_path %}
+                    <img src="{{ company.logo_path }}" alt="SSAMSUNG" style="height: 60px;">
+                {% endif %}
+            </div>
+            <div class="col"><span class="text-white fs-1 fw-bold text-nowrap">{{ company.name }}</span></div> 
+        </div>
+    </div>
+    
+
+    <!-- 재무제표 -->
+    <div class="box" id="재무제표">
+        <h3>재무제표</h3>
+        <table class="table table-bordered text-center border-primary">
+            <tr>
+            <p><th>-</th></p>
+            {% for finance in finances %}
+                <p><th>{{ finance.year }}</th></p>
+            {% endfor %}
+            </tr>
+            <tr>
+            <th>당기순이익 (억원)</th>
+            {% for finance in finances %}
+                <td>{{ finance.profit|intcomma }}</td>
+            {% endfor %}
+            </tr>
+            <tr>
+            <th>매출액 (억원)</th>
+            {% for finance in finances %}
+            <td>{{ finance.revenue|intcomma }}</td>
+            {% endfor %}
+    
+            </tr>
+            <tr>
+            <th>부채비율</th>
+            {% for finance in finances %}
+            <td>{{ finance.debt }}</td>
+            {% endfor %}
+            </tr>	
+            <tr>
+            <th>자본금</th>
+            {% for finance in finances %}
+                <td>{{ finance.capital|intcomma }}</td>
+            {% endfor %}
+            </tr>	
+            <th>직원수 (명)</th>
+            <td>-</td>
+            <td>-</td>
+            <td>{{ company.employee|intcomma }}</td>
+            </tr>	
+            <th>근속년수 (년)</th>
+            <td>-</td>
+            <td>-</td>
+            <td>{{ company.work_year }}</td>
+            </tr>	
+        </table>
+    </div>
+
+    <!-- 사업의 개요 -->
+    {% comment %} <div class="box" id="개요">
+        <h2>사업의 개요</h2>
+        {% for information in info %}
+            {% if information %}
+                <p>{{information}}</p>
+            {% endif %}
+        {% endfor %}
+    </div> {% endcomment %}
+    
+    {% comment %}
+    <div class="row" id="리포트/기사">
+        <!-- 기업 리포트 -->
+        <div class="box col-6">
+            <h2>기업 리포트</h2>
+            {% comment %} <table class="report-box">
+                <tr>
+                    <td>{{ h_date }}</td>
+                    <td><a href="{{ h_url }}">{{ h_title }}</a></td>
+                    <td>{{ h_author }}</td>
+                    <td>{{ h_ref }}</td>
+                </tr>
+            </table>
+            {{ df|safe }}
+            <hr> {% endcomment %}
+            {% comment %} {% for body in report_body %}
+                {% for lst in body %}
+                    {{ lst }}
+                    <hr>
+                    <p>작성일 : {{ body[idx][0] }}</p>
+                    <p>분류 : {{ body[idx][1] }}</p>
+                    <p>제목 : {{ body[idx][2] }}</p>
+                    <p>소제목 : {{ body[idx][3:-2] }}</p>
+                    <p>작성자 : {{ body[idx][-2] }}</p>
+                    <p>제공출처 : {{ body[idx][-1] }}</p>
+                    <p>--------------------------------</p>
+                {% endfor %}
+            {% endfor %} {% endcomment %}
+            {% comment %}
+            <table class="table table-bordered">
+                <tr>
+                    <th>날짜</th>
+                    <th>분류</th>
+                    <th>제목</th>
+                    <th>소제목</th>
+                    <th>작성자</th>
+                    <th>출처</th>
+                </tr>
+                {% for body in report_body %}
+                    <tr>
+                        {% for val in body %}
+                            {% comment %} {% if len(val) > 1 %}
+                                {% for v in val %}
+                                    <td>{{ v }}</td>
+                                {% endfor %}
+                            {% else %} {% endcomment %}
+                            {% comment %}    
+                            <td>{{ val }}</td>
+                            {% comment %} {% endif %} {% endcomment %}
+                        {% comment %}
+                            {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div> {% endcomment %}
+    <div class="row">
+        <!-- 최신 뉴스 -->
+        <div class="box col-6">
+            <h2>최신 뉴스</h2>
+            <div class='news-div overflow-auto'>
+                <table class="table table-bordered table-hover">
+                    <thead class='table-light'>
+                        <tr>
+                            <td nowrap>번호</td>
+                            <td>제목</td>
+                            <td>정보제공</td>
+                            <td>날짜</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td>{{ article.pk }}</td>
+                                <td>
+                                    <a href="{{ article.url }}">{{ article.title }}</a>
+                                </td>
+                                <td>{{ article.press }}</td>
+                                
+                                <td>{{ article.date|date:"Y-m-d" }}</td>
+                            </tr>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- 기업 리포트 -->
+        <div class='box col-6'>
+            <h2>기업 리포트</h2>
+            <div class="report-div overflow-auto">
+                <table class="table table-bordered table-hover">
+                    <thead class='table-light'>
+                        <tr>
+                            <td nowrap>번호</td>
+                            <td>제목</td>
+                            <td>작성자</td>
+                            <td nowrap>제공출처</td>
+                            <td>날짜</td>    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if reports %}
+                            {% for report in reports %}
+                            <tr>
+                                <td>{{report.pk}}</td>
+                                <td> <a href="{{report.url}}">{{report.title}}</a> </td>
+                                <td>{{report.author}}</td>
+                                <td>{{report.firm}}</td>
+                                <td>{{report.date|date:"Y-m-d"}}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td>리포트 검색결과가 없습니다.</td>
+                            </tr>
+                        {% endif %}  
+                    </tbody>    
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+     <!-- 채용 공고 -->
+    <div class='row'>
+        <div class="box" id="채용공고">
+            <h2>채용 공고</h2>
+            <div>
+                {% if True %}
+                <h5>현재 진행 중인 공고가 없습니다.</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div> 
+    
+</div>
+<script>
+    document.getElementById('information').classList.add('active');
+    const renderPagination = function (currentPage) {
+        if ()
+    }
+</script>
+{% endblock content %}

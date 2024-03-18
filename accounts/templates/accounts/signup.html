@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+
+.logo_img {
+  width: 100px;
+}
+div { 
+  padding-top : 20px;
+}
+
+{% endblock style %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div>
+    <div class="text-center">
+      <img src="{% static "img/logo_mini.png" %}" class="logo_img" alt="" >
+    </div>
+    <div class="text-center">
+      <h2>COMPOINT에 오신 것을 환영합니다.</h2>
+      <p>
+        COMPOINT는 취업준비생과 직장인을 위한 사이트입니다.
+      </p>
+      <hr>
+    </div>
+    <form action="{% url "accounts:signup" %}" method="POST" >
+      {% csrf_token %}
+      {{ form.as_div }}
+      <div class="d-grid col-12">
+        <input type="submit" class='btn btn-secondary btn-lg shadow' value="회원가입">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

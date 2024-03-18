@@ -1,0 +1,36 @@
+.header {
+    margin-top: 3rem; 
+    margin-bottom: 3rem; 
+    background: #C0FFFF;
+    height: 20%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.list {
+background: #8FBC8F;
+padding: 0;
+}
+p {
+margin: 0;
+}
+.card-grid-tag {
+height: 250px;
+/* width:  */
+}
+.card-div {
+height: 100%;
+}
+
+.card-img-tag {
+height: 40%;
+}
+.card-text-div {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+border-radius: 1em;
+position: relative;
+flex-shrink: 1;
+}

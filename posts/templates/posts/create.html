@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block style %}
+.con-div {
+  width: 800px;
+}
+.form-div {
+  width: 100%;
+  height: 50px;
+}
+.form-text {
+  width: 100%;
+}
+.btn-upload {
+  background-color: #FFE76C;
+  color: #1C535C;
+}
+.btn-cancle {
+  {% comment %} background-color: #FFE76C;
+  color: #1C535C; {% endcomment %}
+}
+{% endblock style %}
+
+{% block content %}
+  <div class="container con-div">
+    <h2 class="mt-3 mb-2">함께 할 때 더 즐거운 순간</h2>
+    <h6 class="mb-4">{{ request.user.nickname }}님 Compoint에서 다양한 사람을 만나고 생각의 폭을 넓혀보세요.</h6>
+    <form action="{% url "posts:create" %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-4">
+        <div class="mb-3">
+          <label for="cat" class="fs-6">토픽</label>
+        </div>
+        <div class="">
+          <select name="category" id="cat" class="form-control form-div">
+            <option value="">토픽을 선택해주세요.</option>
+            <option value="취업고민">취업고민</option>
+            <option value="직장인고민">직장인고민</option>
+            <option value="이직고민">이직고민</option>
+            <option value="자유게시판">자유게시판</option>
+          </select>
+        </div>
+      </div>
+      {{ form.media }}
+      
+      <div class="mb-4">
+        <div class="mb-2">
+          <span class="fs-6">
+            {{ form.title.label }}
+          </span>
+        </div>
+        <div class="">
+          {{ form.title }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="mb-2">
+          <span class="fs-6">
+            {{ form.content.label }}
+          </span>
+        </div>
+        <div class="form-text">
+          {{ form.content }}
+        </div>
+      </div>
+
+      <hr>
+      <div class="d-flex flex-row justify-content-end">
+        <div class="mx-2">
+          <input class="btn btn-upload" type="submit" value="등록">
+        </div>
+        <div class="me-3">
+          <a class="btn btn-cancle" href="{% url 'posts:index' %}">취소</a>
+        </div>
+      </div>
+    </form>
+  </div>
+<script>
+  document.getElementById('post').classList.add('active');
+
+  const ckDiv = document.querySelector('.django-ckeditor-widget')
+  ckTag.classList.add('rounded')
+
+  const ckTag = document.querySelector('.cke_inner')
+  ckTag.classList.add('form-control')
+</script>
+{% endblock content %}

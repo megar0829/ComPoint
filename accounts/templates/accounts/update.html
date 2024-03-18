@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+
+.logo_img {
+  width: 100px;
+}
+div { 
+  padding-top : 20px;
+}
+
+{% endblock style %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div>
+    <div class="text-center">
+      <img src="{% static "img/logo_mini.png" %}" class="logo_img" alt="" >
+    </div>
+    <div class="text-center">
+      <h2>회원정보 수정</h2>
+      <p>
+        COMPPOINT는 취업준비생과 직장인을 위한 사이트입니다.
+      </p>
+      <hr>
+    </div>
+    <form action="{% url "accounts:update"  %}" method="POST" >
+      {% csrf_token %}
+      {{form.as_div}}
+      <div class="d-grid col-12">
+        <div class="d-flex justify-content-center mt-3">
+          <input type="submit" class="btn btn-success" value="적용">
+          <a class="btn btn-light ms-2" href="{% url "accounts:profile" request.user %}">취소</a>
+        </div>
+        {% comment %} <input type="submit" class='btn btn-secondary btn-lg' value="회원가입"> {% endcomment %}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+{% comment %} {% extends "base.html" %} {% endcomment %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% comment %} {% block style %}
+.logo_img {
+  width: 100px;
+}
+div { 
+  padding-top : 20px;
+}
+#id_password {
+  display: none;
+}
+{% endblock style %}
+
+{% block content %}
+  <div class="d-flex justify-content-center">
+    <div>
+      <div class="text-center">
+        <img src="{% static "img/logo_mini.png" %}" class="logo_img" alt="" >
+      </div>
+      <div class="text-center">
+        <h2>회원 정보 수정</h2>
+        <p>
+          회원 정보를 수정하는 페이지입니다.
+        </p>
+        <hr>
+      </div>
+      <form action="{% url "accounts:update" %}" method="POST" >
+        {% csrf_token %}
+        {{ form.as_div }} {% endcomment %}
+        {% comment %} {{ pw_form.as_div }} {% endcomment %}
+        {% comment %} <a class="btn btn-light ms-2" href="{% url "accounts:change_password" request.user %}">비밀번호 변경</a> {% endcomment %}
+        {% comment %} <div class="d-flex justify-content-center mt-3">
+          <input type="submit" class="btn btn-success" value="적용">
+          <a class="btn btn-light ms-2" href="{% url "accounts:profile" request.user %}">취소</a>
+        </div> {% endcomment %}
+        {% comment %} <div class="d-grid col-12">
+          <input type="submit" class='btn btn-secondary btn-lg' value="적용">
+          <a class="btn btn-light ms-2" href="{% url "accounts:profile" request.user %}">취소</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login').classList.add('active');
+  </script>
+{% endblock content %} {% endcomment %}

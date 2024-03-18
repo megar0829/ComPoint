@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block style %}
+a { 
+    text-decoration: none;
+}
+a:hover { 
+    text-decoration: underline;
+}
+.gongo_img { 
+    height: 40px;
+  }
+.search-body {
+    width: 1000px;
+}
+{% endblock style %}
+{% block content %}
+<div class="container m-3 d-flex justify-content-center">
+    <div class="search-body">
+    <div>
+        <span class="fw-bold fs-3">검색 결과</span>
+    </div>
+    <hr>
+    <div>
+    <div>
+        <span class="fw-bold fs-5">기업정보</span>
+        <div class="border p-3 m-3 rounded">
+            {% if search_companys %}
+                {% for company in search_companys %}
+                    <div class="m-0">
+                        <a href="{% url "info:detail" company.pk %}">
+                            <p class="fs-5 fw-bold">{{ company.name }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                "{{ keyword }}에 대한 검색결과가 없습니다."
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div>
+            <span class="fw-bold fs-5">채용 공고</span>
+        </div>
+        {% if search_gongos %} 
+            {% for gongo in search_gongos %}
+                <div class="border p-3 m-3 rounded">
+                    <div class="m-0"><img src="{{ gongo.image }}" alt="" class="gongo_img m-0"> </div>
+                    <div class="m-2"><span> <a href="{% url "info:gongo_detail" gongo.pk %}" class="text-dark">{{ gongo.title }}</a></span></div>
+                    {{ gongo.date }}
+                </div>
+            {% endfor %}
+            {% else %}
+                <div class="border p-3 m-3 rounded">
+                    "{{ keyword }}"에 대한 검색 결과가 없습니다.
+                </div>
+            {% endif %}
+
+    </div>
+    <hr>
+    <div>
+        <div>
+            <span class="fw-bold fs-5">커뮤니티</span>
+        </div>
+        <div>
+            {% if search_posts %}
+                {% for post in search_posts %}
+                    <div class="border p-3 m-3 rounded">
+                        <div class="d-flex justify-content-between m-2">
+                        <div class="m-0">
+                            <span> <a href="{% url "posts:detail" post.pk%}" class="text-dark">{{ post.title }}</a></span>
+                        </div>
+                        <div class=m-0>
+                            <i class="bi bi-heart"></i>
+                            {{ post.like_users.all | length}}
+                        </div>
+                        </div>
+                        <div class="p-2">
+                            {% if post.created_string %}
+                            <span>{{ post.created_string }}</span>
+                            {% else %}
+                            <span>{{ post.created_at | date:'m월 d일' }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="border p-3 m-3 rounded">
+                    "{{ keyword }}"에 대한 검색결과가 없습니다.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+</div>
+</div>
+{% endblock content %}
+

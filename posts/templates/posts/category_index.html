@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block style %}
+.header-div {
+  margin-bottom: 3rem;
+}
+.cont-div {
+  {% comment %} background-color: lightblue; {% endcomment %}
+}
+.cat-div {
+  {% comment %} box-sizing: content-box; {% endcomment %}
+}
+.cat-div-cat {
+  border: 1px #E5EAEE solid;
+  border-radius: 1rem;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5EAEE;
+  box-sizing: content-box
+}
+.cat-div-div {
+  height: 90%;
+}
+.mid-div {
+  height: 60px;
+}
+{% endblock style %}
+
+{% block content %}
+<div class = "container cont-div">
+  <header class="cat-div-cat d-flex flex-row justify-content-center position-relative mt-4 mb-4">
+    <div class="position-relative">
+      <span class="fs-3">{{ category.name }} 게시판</span>
+    </div>
+  </header>
+  <div class="position-relative mid-div">
+    <div class="position-absolute top-0 end-0">
+      <a class="btn btn-outline-secondary" href="{% url 'posts:create' %}">글 작성</a>
+    </div>
+  </div>
+  <div class="cat-div col">
+    <div class="cat-div-div mx-3 mt-1">
+      {% for post in posts %}
+      <div class="border-bottom border-secondary mb-3 pb-1">
+        <div class="d-flex flex-row justify-content-between mb-1">
+          <div>
+            <span class="fs-5">{{ post.user.nickname }} </span>
+          </div>
+          <div>
+            {% if post.created_string %}
+            <span>{{ post.created_string }}</span>
+            {% else %}
+            <span>{{ post.created_at | date:'m월 d일' }}</span>
+            {% endif %}
+            <span>
+              <i class="bi bi-heart"></i>
+              {{ post.like_users.all | length}}
+            </span>
+          </div>
+        </div>
+        <div>
+          <div>
+            <a class="text-decoration-none link-dark" href="{% url "posts:detail" post.pk %}">
+              <span class="fs-5">{{ post.title }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('post').classList.add('active');
+</script>
+{% endblock content %}

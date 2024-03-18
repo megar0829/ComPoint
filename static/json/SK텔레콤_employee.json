@@ -1,0 +1,46 @@
+{
+    "status": "000",
+    "message": "정상",
+    "list": [
+        {
+            "rcept_no": "20230320000235",
+            "corp_cls": "Y",
+            "corp_code": "00159023",
+            "corp_name": "SK텔레콤",
+            "sexdstn": "남",
+            "fo_bbm": "전사",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "4,214",
+            "rgllbr_abacpt_labrr_co": "-",
+            "cnttk_co": "90",
+            "cnttk_abacpt_labrr_co": "-",
+            "sm": "4,304",
+            "avrg_cnwk_sdytrn": "14.1",
+            "fyer_salary_totamt": "666,309,000,000",
+            "jan_salary_am": "155,000,000",
+            "rm": "-"
+        },
+        {
+            "rcept_no": "20230320000235",
+            "corp_cls": "Y",
+            "corp_code": "00159023",
+            "corp_name": "SK텔레콤",
+            "sexdstn": "여",
+            "fo_bbm": "전사",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "929",
+            "rgllbr_abacpt_labrr_co": "-",
+            "cnttk_co": "180",
+            "cnttk_abacpt_labrr_co": "-",
+            "sm": "1,109",
+            "avrg_cnwk_sdytrn": "8.5",
+            "fyer_salary_totamt": "115,481,000,000",
+            "jan_salary_am": "104,000,000",
+            "rm": "-"
+        }
+    ]
+}

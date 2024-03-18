@@ -1,0 +1,46 @@
+{
+    "status": "000",
+    "message": "정상",
+    "list": [
+        {
+            "rcept_no": "20230316001052",
+            "corp_cls": "E",
+            "corp_code": "00254045",
+            "corp_name": "우리은행",
+            "sexdstn": "남",
+            "fo_bbm": "금융업",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "5,695",
+            "rgllbr_abacpt_labrr_co": "-",
+            "cnttk_co": "475",
+            "cnttk_abacpt_labrr_co": "163",
+            "sm": "6,170",
+            "avrg_cnwk_sdytrn": "17.0 ",
+            "fyer_salary_totamt": "720,469,000,000",
+            "jan_salary_am": "118,000,000",
+            "rm": "-"
+        },
+        {
+            "rcept_no": "20230316001052",
+            "corp_cls": "E",
+            "corp_code": "00254045",
+            "corp_name": "우리은행",
+            "sexdstn": "여",
+            "fo_bbm": "금융업",
+            "reform_bfe_emp_co_rgllbr": "-",
+            "reform_bfe_emp_co_cnttk": "-",
+            "reform_bfe_emp_co_etc": "-",
+            "rgllbr_co": "7,508",
+            "rgllbr_abacpt_labrr_co": "252",
+            "cnttk_co": "235",
+            "cnttk_abacpt_labrr_co": "20",
+            "sm": "7,743",
+            "avrg_cnwk_sdytrn": "16.5 ",
+            "fyer_salary_totamt": "727,281,000,000",
+            "jan_salary_am": "94,000,000",
+            "rm": "-"
+        }
+    ]
+}
